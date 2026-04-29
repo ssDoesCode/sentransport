@@ -1,0 +1,43 @@
+.stat-reseau {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-titre {
+  color: #2c3e50;
+  font-size: 1rem;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-grille {
+  display: flex;
+  gap: 16px;
+}
+
+.stat-carte {
+  flex: 1;
+  background-color: #f5f6fa;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-valeur {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #0a6e31;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  margin-top: 4px;
+}
