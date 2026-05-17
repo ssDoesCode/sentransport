@@ -12,8 +12,11 @@ function App() {
   const [erreur, setErreur] = useState(null);
   const [recherche, setRecherche] = useState("");
   const [ligneSelectionnee, setLigneSelectionnee] = useState(null);
+  const [chargementDetail, setChargementDetail] = useState(false);
 
-  useEffect(() => {
+  function chargerLignes() {
+    setChargement(true);
+    setErreur(null);
     fetch("http://localhost:5000/lignes")
       .then(response => {
         if (!response.ok) {
@@ -29,6 +32,10 @@ function App() {
         setErreur(error.message);
         setChargement(false);
       });
+  }
+
+  useEffect(() => {
+    chargerLignes();
   }, []);
 
   const lignesFiltrees = lignes.filter(l =>
@@ -40,9 +47,18 @@ function App() {
   function handleClickLigne(ligne) {
     if (ligneSelectionnee && ligneSelectionnee.id === ligne.id) {
       setLigneSelectionnee(null);
-    } else {
-      setLigneSelectionnee(ligne);
+      return;
     }
+    setChargementDetail(true);
+    fetch(`http://localhost:5000/lignes/${ligne.id}`)
+      .then(response => response.json())
+      .then(data => {
+        setLigneSelectionnee(data);
+        setChargementDetail(false);
+      })
+      .catch(() => {
+        setChargementDetail(false);
+      });
   }
 
   if (chargement) {
@@ -75,6 +91,9 @@ function App() {
     <div className="App">
       <Header />
       <main className="contenu">
+        <button className="btn-recharger" onClick={chargerLignes}>
+          Recharger
+        </button>
         <Recherche valeur={recherche} onChange={setRecherche} />
         <p className="resultat-recherche">
           {lignesFiltrees.length} ligne{lignesFiltrees.length > 1 ? 's' : ''} trouvée{lignesFiltrees.length > 1 ? 's' : ''}
@@ -90,7 +109,12 @@ function App() {
             onClick={() => handleClickLigne(ligne)}
           />
         ))}
-        {ligneSelectionnee && <DetailLigne ligne={ligneSelectionnee} />}
+        {chargementDetail && (
+          <p className="message-chargement">Chargement des détails...</p>
+        )}
+        {ligneSelectionnee && !chargementDetail && (
+          <DetailLigne ligne={ligneSelectionnee} />
+        )}
       </main>
       <Footer />
     </div>

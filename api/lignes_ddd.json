@@ -40,5 +40,14 @@
     "arrivee": "Sandaga",
     "arrets": 11,
     "listeArrets": ["Yoff Village", "Aeroport LSS", "Parcelles U17", "Grand Yoff", "HLM", "Sandaga"]
-  }
+  },
+  {
+    "id": 7, "numero": "22",
+    "depart": "Fann",
+    "arrivee": "HLM",
+    "arrets": 5,
+    "listeArrets": ["Fann", "Point E", "Liberte", "Dieuppeul", "HLM"]
+  },
+  { "id": 8, "numero": "44", "depart": "Liberte", "arrivee": "Medina", "arrets": 7,
+    "listeArrets": ["Liberte 6", "Liberte 5", "Liberte 1", "Medina"] }
 ]
