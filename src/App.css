@@ -36,3 +36,28 @@
     margin-right: 12px;
   }
 }
+.btn-effacer {
+  padding: 10px 16px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.2s;
+}
+
+.btn-effacer:hover {
+  background-color: #c0392b;
+}
+.aucun-resultat {
+  text-align: center;
+  color: #e74c3c;
+  font-size: 1rem;
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #fff5f5;
+  border-radius: 8px;
+  border: 1px solid #e74c3c;
+}
