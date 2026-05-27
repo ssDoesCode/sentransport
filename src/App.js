@@ -8,6 +8,7 @@ import Footer from './Footer';
 import Carte from './Carte';
 import Meteo from './Meteo';
 import SignalerIncident from './SignalerIncident';
+import ListeIncidents from './ListeIncidents';
 
 function App() {
   const [lignes, setLignes] = useState([]);
@@ -16,6 +17,7 @@ function App() {
   const [recherche, setRecherche] = useState("");
   const [ligneSelectionnee, setLigneSelectionnee] = useState(null);
   const [chargementDetail, setChargementDetail] = useState(false);
+  const [compteurIncidents, setCompteurIncidents] = useState(0);
 
   function chargerLignes() {
     setChargement(true);
@@ -120,7 +122,10 @@ function App() {
           <DetailLigne ligne={ligneSelectionnee} />
         )}
         <Carte />
-        <SignalerIncident />
+        <SignalerIncident
+          onNouvelIncident={() => setCompteurIncidents(c => c + 1)}
+        />
+        <ListeIncidents actualiser={compteurIncidents} />
       </main>
       <Footer />
     </div>

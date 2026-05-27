@@ -3,6 +3,7 @@ import './Meteo.css';
 
 function Meteo() {
   const [meteo, setMeteo] = useState(null);
+  const [previsions, setPrevisions] = useState([]);
   const [erreur, setErreur] = useState(null);
 
   useEffect(() => {
@@ -12,12 +13,13 @@ function Meteo() {
       return;
     }
 
-    const url =
+    // Météo actuelle
+    const urlActuelle =
       `https://api.openweathermap.org/data/2.5/weather`
       + `?q=Dakar&appid=${API_KEY}`
       + `&units=metric&lang=fr`;
 
-    fetch(url)
+    fetch(urlActuelle)
       .then(r => {
         if (!r.ok) throw new Error("Erreur : " + r.status);
         return r.json();
@@ -32,6 +34,32 @@ function Meteo() {
         });
       })
       .catch(err => setErreur(err.message));
+
+    // Prévisions 5 jours
+    const urlPrevisions =
+      `https://api.openweathermap.org/data/2.5/forecast`
+      + `?q=Dakar&appid=${API_KEY}`
+      + `&units=metric&lang=fr`;
+
+    fetch(urlPrevisions)
+      .then(r => r.json())
+      .then(data => {
+        // Un relevé toutes les 3h → on prend un par jour à midi
+        const parJour = {};
+        data.list.forEach(item => {
+          const date = item.dt_txt.split(" ")[0];
+          if (!parJour[date] && item.dt_txt.includes("12:00:00")) {
+            parJour[date] = {
+              date,
+              temperature: Math.round(item.main.temp),
+              description: item.weather[0].description,
+              icone: item.weather[0].icon,
+            };
+          }
+        });
+        setPrevisions(Object.values(parJour).slice(0, 3));
+      })
+      .catch(() => {});
   }, []);
 
   function getAlerte(condition) {
@@ -84,6 +112,27 @@ function Meteo() {
       {alerte && (
         <div className={`meteo-alerte ${alerte.classe}`}>
           {alerte.message}
+        </div>
+      )}
+      {previsions.length > 0 && (
+        <div className="previsions">
+          <h4 className="previsions-titre">Prévisions 3 jours</h4>
+          <div className="previsions-liste">
+            {previsions.map(p => (
+              <div key={p.date} className="prevision-carte">
+                <span className="prevision-date">
+                  {new Date(p.date).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })}
+                </span>
+                <img
+                  src={`https://openweathermap.org/img/wn/${p.icone}.png`}
+                  alt={p.description}
+                  className="prevision-icone"
+                />
+                <span className="prevision-temp">{p.temperature}°C</span>
+                <span className="prevision-desc">{p.description}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

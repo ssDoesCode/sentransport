@@ -1,61 +1,52 @@
-.meteo {
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.previsions {
+  margin-top: 12px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
 }
 
-.meteo-info {
+.previsions-titre {
+  color: #2c3e50;
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+}
+
+.previsions-liste {
   display: flex;
-  align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.meteo-icone { width: 50px; height: 50px; }
+.prevision-carte {
+  flex: 1;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f5f6fa;
+  border-radius: 8px;
+  padding: 8px;
+}
 
-.meteo-temp {
-  font-size: 1.4rem;
+.prevision-date {
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  text-align: center;
+}
+
+.prevision-icone {
+  width: 40px;
+  height: 40px;
+}
+
+.prevision-temp {
   font-weight: bold;
   color: #2c3e50;
-  margin-right: 8px;
+  font-size: 0.95rem;
 }
 
-.meteo-desc {
+.prevision-desc {
+  font-size: 0.75rem;
   color: #7f8c8d;
+  text-align: center;
   text-transform: capitalize;
-}
-
-.meteo-humidite {
-  color: #3498db;
-  font-size: 0.85rem;
-  margin-left: auto;
-}
-
-.meteo-alerte {
-  margin-top: 8px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-.alerte-pluie {
-  background: #fff3e0;
-  color: #e65100;
-  border-left: 4px solid #e65100;
-}
-
-.alerte-orage {
-  background: #fce4ec;
-  color: #c62828;
-  border-left: 4px solid #c62828;
-}
-
-.meteo-erreur { border-left: 4px solid #e74c3c; }
-
-.meteo-detail {
-  color: #e74c3c;
-  font-family: monospace;
-  font-size: 0.85rem;
 }
