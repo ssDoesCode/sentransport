@@ -6,6 +6,8 @@ import LigneBus from './LigneBus';
 import DetailLigne from './DetailLigne';
 import Footer from './Footer';
 import Carte from './Carte';
+import Meteo from './Meteo';
+import SignalerIncident from './SignalerIncident';
 
 function App() {
   const [lignes, setLignes] = useState([]);
@@ -92,6 +94,7 @@ function App() {
     <div className="App">
       <Header />
       <main className="contenu">
+        <Meteo />
         <button className="btn-recharger" onClick={chargerLignes}>
           Recharger
         </button>
@@ -117,6 +120,7 @@ function App() {
           <DetailLigne ligne={ligneSelectionnee} />
         )}
         <Carte />
+        <SignalerIncident />
       </main>
       <Footer />
     </div>

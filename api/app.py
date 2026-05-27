@@ -11,11 +11,13 @@ with open("lignes_ddd.json", "r") as f:
 with open("arrets.json", "r") as f:
     arrets = json.load(f)
 
+incidents = []
+
 @app.route("/")
 def accueil():
     return jsonify({
         "message": "Bienvenue sur l'API SenTransport !",
-        "endpoints": ["/lignes", "/lignes/<id>", "/arrets", "/stats", "/lignes/recherche?q="]
+        "endpoints": ["/lignes", "/lignes/<id>", "/arrets", "/stats", "/lignes/recherche?q=", "/incidents"]
     })
 
 @app.route("/lignes")
@@ -55,6 +57,24 @@ def recherche_lignes():
         if q in l["depart"].lower() or q in l["arrivee"].lower()
     ]
     return jsonify(resultats)
+
+@app.route("/incidents", methods=["GET"])
+def get_incidents():
+    return jsonify(incidents)
+
+@app.route("/incidents", methods=["POST"])
+def post_incident():
+    data = request.get_json()
+    if not data or "ligne" not in data or "description" not in data:
+        return jsonify({"erreur": "Champs requis manquants"}), 400
+    incident = {
+        "id": len(incidents) + 1,
+        "ligne": data["ligne"],
+        "description": data["description"],
+        "lieu": data.get("lieu", "Non précisé"),
+    }
+    incidents.append(incident)
+    return jsonify(incident), 201
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
